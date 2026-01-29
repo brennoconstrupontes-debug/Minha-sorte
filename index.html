@@ -8,24 +8,33 @@
         :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; --gold: #f1c40f; --danger: #e74c3c; --menu-bg: #0b1437; }
         body { background: var(--bg); color: white; margin: 0; font-family: -apple-system, system-ui, sans-serif; overflow-x: hidden; user-select: none; }
 
+        /* TELA DE LOGIN */
+        .auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .auth-box { width: 85%; text-align: center; background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #1e2a5a; }
+        .input-app { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; border: 1px solid #1e2a5a; background: #060b21; color: white; font-size: 16px; box-sizing: border-box; }
+
         /* HEADER */
         .header { padding: 15px; background: var(--card); border-bottom: 1px solid #1e2a5a; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
         .menu-icon { font-size: 1.5rem; color: var(--primary); cursor: pointer; }
         .balance-btn { background: rgba(46, 204, 113, 0.1); padding: 8px 15px; border-radius: 25px; border: 1px solid var(--primary); color: var(--primary); font-weight: 800; border: none; }
 
-        /* MENU LATERAL ESTILO VÍDEO */
+        /* MENU LATERAL */
         .side-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100%; background: var(--menu-bg); z-index: 5000; transition: 0.3s; overflow-y: auto; }
         .side-menu.active { left: 0; }
         .menu-header { padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1e2a5a; }
         .menu-row { display: flex; justify-content: space-between; padding: 18px 15px; border-bottom: 1px solid #1e2a5a; font-size: 0.9rem; font-weight: bold; }
 
+        /* BANNER E NOTIFICAÇÃO */
+        .banner-promo { width: 90%; height: 80px; margin: 15px auto; border-radius: 15px; background: linear-gradient(45deg, #1e2a5a, #2ecc71); display: flex; align-items: center; justify-content: center; font-weight: 900; text-align: center; font-size: 0.8rem; border: 1px solid var(--primary); }
+        #notif { position: fixed; top: -60px; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 10px 20px; border-radius: 30px; font-weight: bold; z-index: 6000; transition: 0.6s; font-size: 0.75rem; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+
         /* JOGOS AREA */
-        .game-container { padding: 15px 15px 120px; }
+        .game-container { padding: 0 15px 120px; }
         .game-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid #1e2a5a; text-align: center; display: none; margin-bottom: 20px; }
         .game-card.active { display: block; }
         .display-main { height: 180px; background: #000; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid #1e2a5a; position: relative; overflow: hidden; }
         
-        /* ROLETA ESTILO */
+        /* ROLETA CSS */
         #roulette { width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--gold); transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1); background: conic-gradient(#e74c3c 0% 12.5%, #000 12.5% 25%, #e74c3c 25% 37.5%, #000 37.5% 50%, #e74c3c 50% 62.5%, #000 62.5% 75%, #e74c3c 75% 87.5%, #000 87.5% 100%); }
         .pointer { position: absolute; top: 10px; z-index: 10; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 20px solid var(--gold); }
 
@@ -34,10 +43,11 @@
         .square { background: #1e2a5a; height: 60px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 
         .btn-play { width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 15px; color: #000; font-weight: 900; text-transform: uppercase; cursor: pointer; }
-        .bet-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .bet-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 15px; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-m { background: #1e2a5a; border: 1px solid var(--accent); color: white; width: 35px; height: 35px; border-radius: 50%; border:none; }
 
-        /* WHATSAPP */
-        .wa-btn { position: fixed; bottom: 100px; right: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.4); text-decoration: none; color: white; }
+        /* SUPORTE WHATSAPP */
+        .wa-btn { position: fixed; bottom: 100px; right: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; z-index: 1000; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
 
         /* NAV TABS */
         .nav-tabs { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0 35px; border-top: 1px solid #1e2a5a; z-index: 900; }
@@ -46,6 +56,18 @@
     </style>
 </head>
 <body>
+
+<div id="notif">Alguém acabou de ganhar R$ 280,00! 🔥</div>
+
+<div id="authScreen" class="auth-overlay">
+    <div class="auth-box">
+        <h2 id="authTitle" style="color:var(--primary)">ESPORTES VIP</h2>
+        <input type="text" id="userNick" placeholder="Usuário" class="input-app">
+        <input type="password" id="userPass" placeholder="Senha" class="input-app">
+        <button onclick="logar()" class="btn-play">ENTRAR NA CONTA</button>
+        <p onclick="alert('Cadastro liberado!')" style="margin-top:15px; font-size:0.7rem; color:gray;">Esqueceu a senha? Chame o suporte.</p>
+    </div>
+</div>
 
 <div id="sideMenu" class="side-menu">
     <div class="menu-header">
@@ -56,29 +78,35 @@
     <div class="menu-row" onclick="switchG('aviator')">🚀 Aviator <span>❯</span></div>
     <div class="menu-row" onclick="switchG('mines')">💣 Mines <span>❯</span></div>
     <div class="menu-row" onclick="switchG('roleta')">🎡 Roleta VIP <span>❯</span></div>
-    <div class="menu-row" onclick="abrirDep()">💰 Depositar PIX <span>❯</span></div>
+    <div class="menu-row" onclick="abrirDep()" style="color:var(--primary)">💰 Depositar PIX <span>❯</span></div>
     <div class="menu-row" style="color:var(--danger)" onclick="location.reload()">🚪 Sair <span>❯</span></div>
 </div>
 
-<div id="mainApp">
+<div id="mainApp" style="display:none;">
     <header class="header">
         <div class="menu-icon" onclick="toggleMenu()">☰</div>
         <div class="balance-btn">R$ <span id="saldoTxt">0.00</span></div>
         <button onclick="abrirDep()" style="background:var(--primary); border:none; padding:8px 12px; border-radius:8px; font-weight:bold;">DEPÓSITO</button>
     </header>
 
+    <div class="banner-promo" id="bannerTxt">SORTEIO DE R$ 500,00 HOJE! 🍀</div>
+
     <div class="game-container">
         <div id="game-aviator" class="game-card active">
             <h3 style="color:var(--accent)">🚀 AVIATOR PRO</h3>
             <div class="display-main" id="avDisplay" style="font-size:3.5rem; font-weight:900;">1.00x</div>
-            <div class="bet-box"><span>Aposta:</span> <b id="betAvTxt">R$ 2.00</b></div>
+            <div class="bet-box">
+                <button class="btn-m" onclick="altAposta(-1)">-</button>
+                <b id="betTxt">R$ 2.00</b>
+                <button class="btn-m" onclick="altAposta(1)">+</button>
+            </div>
             <button id="btnAv" class="btn-play" onclick="startAviator()">APOSTAR</button>
         </div>
 
         <div id="game-tiger" class="game-card">
             <h3 style="color:var(--gold)">🐯 FORTUNE TIGER</h3>
             <div class="display-main" id="tiDisplay" style="font-size:3rem;">🐯🐯🐯</div>
-            <button class="btn-play" style="background:var(--gold)" onclick="startTiger()">GIRAR</button>
+            <button class="btn-play" style="background:var(--gold)" onclick="startTiger()">GIRAR AGORA</button>
         </div>
 
         <div id="game-mines" class="game-card">
@@ -90,11 +118,8 @@
 
         <div id="game-roleta" class="game-card">
             <h3 style="color:var(--gold)">🎡 ROLETA VIP</h3>
-            <div class="display-main">
-                <div class="pointer"></div>
-                <div id="roulette"></div>
-            </div>
-            <button id="btnRo" class="btn-play" style="background:var(--gold)" onclick="startRoleta()">GIRAR ROLETA (R$ 5.00)</button>
+            <div class="display-main"><div class="pointer"></div><div id="roulette"></div></div>
+            <button id="btnRo" class="btn-play" style="background:var(--gold)" onclick="startRoleta()">GIRAR (R$ 5.00)</button>
         </div>
     </div>
 
@@ -110,11 +135,20 @@
 
 <script>
     let saldo = parseFloat(localStorage.getItem('saldo')) || 0;
+    let aposta = 2.00;
     let jogando = false;
-    let apostaBase = 2.00;
+
+    // LOGIN
+    function logar() {
+        if(document.getElementById('userNick').value.length < 2) return alert("Digite seu usuário!");
+        document.getElementById('authScreen').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+        atualizar(); renderMines();
+    }
 
     function atualizar() {
         document.getElementById('saldoTxt').innerText = saldo.toFixed(2);
+        document.getElementById('betTxt').innerText = "R$ " + aposta.toFixed(2);
         localStorage.setItem('saldo', saldo);
     }
 
@@ -125,30 +159,31 @@
         document.getElementById('game-'+g).classList.add('active');
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.getElementById('sideMenu').classList.remove('active');
-        if(g === 'mines') renderMines();
     }
+
+    function altAposta(v) { if(!jogando) { aposta = Math.max(1, aposta + v); atualizar(); } }
 
     function abrirDep() {
-        let v = prompt("Quanto deseja depositar?");
-        if(v) { saldo += parseFloat(v); atualizar(); }
+        let v = prompt("Valor do depósito via PIX:");
+        if(v) { saldo += parseFloat(v); alert("Depósito Recebido!"); atualizar(); }
     }
 
-    // --- AVIATOR (LOGICA REAL) ---
+    // AVIATOR REAL
     function startAviator() {
         if(jogando) { jogando = false; return; }
-        if(saldo < apostaBase) return alert("Sem saldo!");
-        saldo -= apostaBase; jogando = true; atualizar();
+        if(saldo < aposta) return alert("Sem saldo!");
+        saldo -= aposta; jogando = true; atualizar();
         let m = 1.00; let crash = (Math.random() * 3 + 1.2).toFixed(2);
         document.getElementById('btnAv').innerText = "CASH OUT";
         let loop = setInterval(() => {
-            if(!jogando) { clearInterval(loop); saldo += (apostaBase * m); resAv(); return; }
+            if(!jogando) { clearInterval(loop); saldo += (aposta * m); resAv(); return; }
             m += 0.04; document.getElementById('avDisplay').innerText = m.toFixed(2) + "x";
             if(m >= crash) { clearInterval(loop); jogando = false; alert("Crashed!"); resAv(); }
         }, 100);
     }
-    function resAv() { document.getElementById('btnAv').innerText = "APOSTAR"; atualizar(); }
+    function resAv() { document.getElementById('btnAv').innerText = "APOSTAR"; document.getElementById('avDisplay').innerText = "1.00x"; atualizar(); }
 
-    // --- MINES (LOGICA REAL) ---
+    // MINES REAL
     let mAtivo = false; let bPos = -1; let mLucro = 0;
     function renderMines() {
         const grid = document.getElementById('minesGrid'); grid.innerHTML = '';
@@ -156,7 +191,7 @@
             let s = document.createElement('div'); s.className = 'square';
             s.onclick = () => {
                 if(!mAtivo || s.innerText != "") return;
-                if(i === bPos) { s.innerText = "💣"; s.style.background = "red"; mAtivo = false; alert("Boom!"); resMines(); }
+                if(i === bPos) { s.innerText = "💣"; s.style.background = "red"; mAtivo = false; alert("Explodiu!"); resMines(); }
                 else { s.innerText = "💎"; s.style.background = "green"; mLucro *= 1.4; document.getElementById('miProfit').innerText = "LUCRO: R$ " + mLucro.toFixed(2); }
             };
             grid.appendChild(s);
@@ -164,16 +199,16 @@
     }
     function startMines() {
         if(!mAtivo) {
-            if(saldo < apostaBase) return alert("Sem saldo!");
-            saldo -= apostaBase; mAtivo = true; mLucro = apostaBase; bPos = Math.floor(Math.random()*16);
+            if(saldo < aposta) return alert("Sem saldo!");
+            saldo -= aposta; mAtivo = true; mLucro = aposta; bPos = Math.floor(Math.random()*16);
             renderMines(); atualizar(); document.getElementById('btnMi').innerText = "COLETAR";
         } else { saldo += mLucro; mAtivo = false; resMines(); }
     }
-    function resMines() { document.getElementById('btnMi').innerText = "INICIAR RODADA"; atualizar(); }
+    function resMines() { document.getElementById('btnMi').innerText = "INICIAR RODADA"; document.getElementById('miProfit').innerText = "LUCRO: R$ 0.00"; atualizar(); }
 
-    // --- ROLETA (LOGICA REAL) ---
+    // ROLETA REAL
     function startRoleta() {
-        if(jogando || saldo < 5) return alert("Saldo insuficiente (R$ 5.00)!");
+        if(jogando || saldo < 5) return alert("Saldo insuficiente (Min: R$ 5.00)!");
         jogando = true; saldo -= 5; atualizar();
         const wheel = document.getElementById('roulette');
         const deg = Math.floor(3000 + Math.random() * 3000);
@@ -181,18 +216,29 @@
         setTimeout(() => {
             jogando = false;
             if(Math.random() > 0.6) { let w = 15; saldo += w; alert("Ganhou R$ "+w); }
-            else { alert("Perdeu!"); }
+            else { alert("Não foi dessa vez!"); }
             atualizar();
         }, 4000);
     }
 
-    // --- TIGER (SIMPLES) ---
+    // TIGER
     function startTiger() {
-        if(saldo < apostaBase) return;
-        saldo -= apostaBase; atualizar();
-        let t = setInterval(() => { document.getElementById('tiDisplay').innerText = "🧧💰🍊"[Math.floor(Math.random()*3)].repeat(3); }, 100);
-        setTimeout(() => { clearInterval(t); if(Math.random()>0.8) { saldo += 10; alert("Ganhou!"); } atualizar(); }, 1000);
+        if(saldo < aposta) return;
+        saldo -= aposta; atualizar();
+        let t = setInterval(() => { document.getElementById('tiDisplay').innerText = "🧧💰🐯🍊"[Math.floor(Math.random()*4)].repeat(3); }, 100);
+        setTimeout(() => { clearInterval(t); if(Math.random()>0.8) { saldo += aposta*5; alert("GANHOU!"); } atualizar(); }, 1200);
     }
+
+    // EXTRAS
+    setInterval(() => {
+        const n = document.getElementById('notif');
+        n.style.top = '20px';
+        setTimeout(() => n.style.top = '-60px', 3000);
+    }, 10000);
+
+    const frases = ["BÔNUS DE 100% NO PIX! 💰", "TIGRINHO PAGANDO MUITO! 🐯", "ROLETA VIP LIBERADA! 🎡"];
+    let fIdx = 0;
+    setInterval(() => { fIdx = (fIdx + 1) % frases.length; document.getElementById('bannerTxt').innerText = frases[fIdx]; }, 4000);
 
     atualizar();
 </script>
