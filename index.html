@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Esportes da Sorte VIP Pro</title>
     <style>
-        :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; --gold: #f1c40f; --danger: #e74c3c; }
+        :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; --gold: #f1c40f; --danger: #e74c3c; --menu-bg: #0b1437; }
         body { background: var(--bg); color: white; margin: 0; font-family: -apple-system, system-ui, sans-serif; padding-top: env(safe-area-inset-top); user-select: none; overflow-x: hidden; }
         
         /* AUTH */
@@ -15,17 +15,22 @@
         .auth-box { width: 85%; text-align: center; background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #1e2a5a; }
         .input-app { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; border: 1px solid #1e2a5a; background: #060b21; color: white; font-size: 16px; box-sizing: border-box; }
         
-        /* HEADER COM AS 3 BARRINHAS */
+        /* HEADER IGUAL AO VÍDEO */
         .header { padding: 15px; background: var(--card); border-bottom: 1px solid #1e2a5a; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
         .menu-icon { font-size: 1.5rem; color: var(--primary); cursor: pointer; }
-        .balance-btn { background: rgba(46, 204, 113, 0.1); padding: 8px 15px; border-radius: 25px; border: 1px solid var(--primary); color: var(--primary); font-weight: 800; }
+        .balance-btn { background: rgba(46, 204, 113, 0.1); padding: 8px 15px; border-radius: 25px; border: 1px solid var(--primary); color: var(--primary); font-weight: 800; font-size: 0.9rem; }
         
-        /* MENU LATERAL */
-        .side-menu { position: fixed; top: 0; left: -100%; width: 280px; height: 100%; background: var(--card); z-index: 5000; transition: 0.4s; box-shadow: 10px 0 30px rgba(0,0,0,0.5); padding: 20px; box-sizing: border-box; }
+        /* MENU LATERAL COMPLETO */
+        .side-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100%; background: var(--menu-bg); z-index: 5000; transition: 0.3s; overflow-y: auto; }
         .side-menu.active { left: 0; }
-        .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4999; display: none; }
-        .menu-overlay.active { display: block; }
-        .menu-item { padding: 15px; border-bottom: 1px solid #1e2a5a; display: flex; align-items: center; gap: 10px; font-weight: bold; }
+        .menu-header { padding: 15px; display: flex; align-items: center; justify-content: space-between; }
+        .search-box { padding: 0 15px; margin-bottom: 20px; }
+        .search-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #1e2a5a; background: #060b21; color: white; box-sizing: border-box; }
+        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 15px; }
+        .cat-card { background: var(--card); border-radius: 12px; padding: 10px; text-align: center; font-size: 0.65rem; border: 1px solid #1e2a5a; }
+        .menu-list-section { padding: 15px; }
+        .section-title { color: #5a6691; font-size: 0.8rem; text-transform: uppercase; margin: 20px 0 10px; font-weight: bold; }
+        .menu-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #1e2a5a; font-size: 0.9rem; }
 
         /* VIP BAR */
         .vip-container { padding: 10px 15px; background: var(--card); }
@@ -40,9 +45,7 @@
         
         /* SELETOR DE APOSTA */
         .bet-selector { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 15px; }
-        .bet-btn { background: #1e2a5a; border: 1px solid var(--accent); color: white; width: 35px; height: 35px; border-radius: 50%; }
-
-        /* BOTÕES */
+        .bet-btn { background: #1e2a5a; border: 1px solid var(--accent); color: white; width: 35px; height: 35px; border-radius: 50%; border: none; }
         .btn-play { width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 15px; color: #000; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; }
 
         /* MINES GRID */
@@ -51,7 +54,7 @@
 
         /* NAV TABS */
         .nav-tabs { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #1e2a5a; padding-bottom: calc(15px + env(safe-area-inset-bottom)); z-index: 900; }
-        .tab { font-size: 1.6rem; opacity: 0.4; }
+        .tab { font-size: 1.6rem; opacity: 0.4; transition: 0.3s; }
         .tab.active { opacity: 1; color: var(--primary); }
 
         /* MODAIS */
@@ -67,26 +70,41 @@
         <input type="text" id="userNick" placeholder="Usuário" class="input-app" maxlength="10">
         <input type="password" id="userPass" placeholder="Senha" class="input-app">
         <button onclick="handleAuth()" class="btn-play" id="btnAuth">CRIAR CONTA</button>
-        <p onclick="toggleAuthMode()" style="margin-top:15px; color:var(--accent)">Já tem conta? Entre</p>
+        <p onclick="toggleAuthMode()" style="margin-top:15px; color:var(--accent); cursor:pointer">Já tem conta? Entre</p>
     </div>
 </div>
 
-<div id="menuOverlay" class="menu-overlay" onclick="toggleMenu()"></div>
 <div id="sideMenu" class="side-menu">
-    <h2 style="color:var(--primary)">MENU</h2>
-    <div class="menu-item" onclick="switchG('aviator', null)">🚀 Aviator</div>
-    <div class="menu-item" onclick="switchG('tiger', null)">🐯 Fortune Tiger</div>
-    <div class="menu-item" onclick="switchG('mines', null)">💣 Mines</div>
-    <div class="menu-item" onclick="abrirDep()">💰 Depositar PIX</div>
-    <div class="menu-item" onclick="location.reload()">🚪 Sair</div>
+    <div class="menu-header">
+        <div style="font-weight: 900; color: white;">ESPORTES DA SORTE</div>
+        <div onclick="toggleMenu()" style="font-size: 1.5rem; color: #5a6691; cursor:pointer">✕</div>
+    </div>
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="Buscar no cassino...">
+    </div>
+    <div class="categories-grid">
+        <div class="cat-card">⚽<br>Esportes</div>
+        <div class="cat-card">🕒<br>Ao Vivo</div>
+        <div class="cat-card">🎰<br>Cassino</div>
+        <div class="cat-card">🎲<br>Vivo</div>
+    </div>
+    <div class="menu-list-section">
+        <div class="section-title">Cassino</div>
+        <div class="menu-row" onclick="switchG('tiger', null)"><span>🐯 Fortune Tiger</span> ❯</div>
+        <div class="menu-row" onclick="switchG('aviator', null)"><span>🚀 Aviator</span> ❯</div>
+        <div class="menu-row" onclick="switchG('mines', null)"><span>💣 Mines</span> ❯</div>
+        <div class="section-title">Conta</div>
+        <div class="menu-row" onclick="abrirDep()"><span>💰 Depositar PIX</span> ❯</div>
+        <div class="menu-row" onclick="location.reload()"><span>🚪 Sair</span> ❯</div>
+    </div>
 </div>
 
 <div id="depositoModal" class="modal">
     <div class="modal-body">
         <h3 style="color:var(--primary)">DEPÓSITO PIX</h3>
-        <p>Valor: R$ <span id="valExibido">20.00</span></p>
+        <p>Valor Selecionado: R$ <span id="valExibido">20.00</span></p>
         <input type="number" id="valorDep" class="input-app" value="20">
-        <button class="btn-play" onclick="irParaMercadoPago()">PAGAR COM MERCADO PAGO</button>
+        <button class="btn-play" onclick="simularPix()">PAGAR COM MERCADO PAGO</button>
         <button onclick="fecharDep()" style="background:none; border:none; color:gray; margin-top:15px;">Voltar</button>
     </div>
 </div>
@@ -94,13 +112,13 @@
 <div id="mainApp" style="display:none;">
     <header class="header">
         <div class="menu-icon" onclick="toggleMenu()">☰</div>
-        <div style="font-weight:900;" onclick="abrirAdmin()">ESPORTES VIP</div>
-        <div class="balance-btn">R$ <span id="spanSaldo">0.00</span></div>
+        <div style="font-weight:900; letter-spacing:1px;" onclick="abrirAdmin()">ESPORTES VIP</div>
+        <div class="balance-btn" onclick="abrirDep()">R$ <span id="spanSaldo">0.00</span></div>
     </header>
 
     <div class="vip-container">
         <div style="font-size:0.7rem; display:flex; justify-content:space-between;">
-            <span>NÍVEL VIP: <b id="rank-name">BRONZE</b></span>
+            <span>NÍVEL VIP: <b id="rank-name" style="color:var(--gold)">BRONZE</b></span>
             <span id="vip-percent">0%</span>
         </div>
         <div class="vip-bar-bg"><div id="vip-progress"></div></div>
@@ -112,14 +130,14 @@
             <div class="display-main"><div id="multiplier" style="font-size:3.5rem; font-weight:900;">1.00x</div></div>
             <div class="bet-selector">
                 <button class="bet-btn" onclick="altBet(-1)">-</button>
-                <span id="valAposta">R$ 2.00</span>
+                <span id="valAposta" style="font-weight:bold; color:var(--gold)">R$ 2.00</span>
                 <button class="bet-btn" onclick="altBet(1)">+</button>
             </div>
             <button id="btnAviator" class="btn-play">APOSTAR</button>
         </div>
 
         <div id="game-tiger" class="game-card">
-            <h3 style="color:var(--gold)">🐯 TIGRINHO</h3>
+            <h3 style="color:var(--gold)">🐯 FORTUNE TIGER</h3>
             <div class="display-main" style="font-size:3rem; gap:10px;">
                 <span id="t1">🐯</span><span id="t2">🐯</span><span id="t3">🐯</span>
             </div>
@@ -128,7 +146,7 @@
 
         <div id="game-mines" class="game-card">
             <h3 style="color:var(--danger)">💣 MINES</h3>
-            <div id="minesProfit" style="color:var(--primary); margin-bottom:10px;">LUCRO: R$ 0.00</div>
+            <div id="minesProfit" style="color:var(--primary); margin-bottom:10px; font-weight:bold;">LUCRO: R$ 0.00</div>
             <div class="mines-grid" id="minesGrid"></div>
             <button id="btnMines" onclick="iniciarMines()" class="btn-play" style="background:var(--danger)">INICIAR JOGO</button>
         </div>
@@ -151,38 +169,41 @@
     // MENU
     function toggleMenu() {
         document.getElementById('sideMenu').classList.toggle('active');
-        document.getElementById('menuOverlay').classList.toggle('active');
     }
 
     // AUTH
     function handleAuth() {
-        const u = document.getElementById('userNick').value;
-        const p = document.getElementById('userPass').value;
-        if(!isLogin) { localStorage.setItem('u', u); localStorage.setItem('p', p); alert("Criado!"); location.reload(); }
-        else { if(u === localStorage.getItem('u') && p === localStorage.getItem('p')) entrar(); else alert("Erro!"); }
+        const u = document.getElementById('userNick').value.trim();
+        const p = document.getElementById('userPass').value.trim();
+        if(!u || !p) return alert("Preencha!");
+        if(!isLogin) { localStorage.setItem('u', u); localStorage.setItem('p', p); alert("Conta Criada!"); location.reload(); }
+        else { if(u === localStorage.getItem('u') && p === localStorage.getItem('p')) entrar(); else alert("Senha incorreta!"); }
     }
     function toggleAuthMode() { isLogin = !isLogin; document.getElementById('authTitle').innerText = isLogin ? "ENTRAR" : "CADASTRAR"; }
     function entrar() { document.getElementById('authScreen').style.display='none'; document.getElementById('mainApp').style.display='block'; atualizar(); renderGrid(); }
 
     // FINANCEIRO
-    function abrirDep() { toggleMenu(); document.getElementById('depositoModal').style.display='flex'; }
+    function abrirDep() { document.getElementById('depositoModal').style.display='flex'; }
     function fecharDep() { document.getElementById('depositoModal').style.display='none'; }
-    function irParaMercadoPago() { 
+    function simularPix() { 
         let v = parseFloat(document.getElementById('valorDep').value);
-        saldo += v; alert("Simulando Mercado Pago: R$ "+v+" adicionados!"); atualizar(); fecharDep();
+        saldo += v; alert("Pagamento Confirmado: R$ " + v.toFixed(2)); atualizar(); fecharDep();
     }
-    function abrirAdmin() { if(prompt("Senha:")==="123") { saldo += parseFloat(prompt("Valor:")); atualizar(); } }
+    function abrirAdmin() { if(prompt("Senha Master:") === "123") { saldo += parseFloat(prompt("Valor:")); atualizar(); } }
 
     function atualizar() {
         document.getElementById('spanSaldo').innerText = saldo.toFixed(2);
         document.getElementById('valAposta').innerText = "R$ " + aposta.toFixed(2);
         document.getElementById('vip-progress').style.width = (exp % 100) + "%";
+        document.getElementById('vip-percent').innerText = (exp % 100) + "%";
         localStorage.setItem('saldo', saldo);
+        localStorage.setItem('exp', exp);
     }
 
-    function altBet(v) { aposta = Math.max(1, aposta + v); atualizar(); }
+    function altBet(v) { if(!rodando) { aposta = Math.max(1, aposta + v); atualizar(); } }
 
     function switchG(g, el) {
+        document.getElementById('sideMenu').classList.remove('active');
         document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
         document.getElementById('game-'+g).classList.add('active');
         if(el) {
@@ -190,26 +211,25 @@
             el.classList.add('active');
         }
         if(g === 'mines') renderGrid();
-        if(document.getElementById('sideMenu').classList.contains('active')) toggleMenu();
     }
 
-    // JOGOS (Lógica Aviator, Tiger e Mines mantida 100%)
+    // JOGOS (Lógica de verdade)
     document.getElementById('btnAviator').onclick = function() {
         if(rodando) { rodando = false; return; }
-        if(saldo < aposta) return alert("Sem saldo");
+        if(saldo < aposta) return alert("Sem saldo!");
         saldo -= aposta; rodando = true;
-        let m = 1.00; let crash = (Math.random() * 3 + 1.2).toFixed(2);
+        let m = 1.00; let crash = (Math.random() * 3 + 1.1).toFixed(2);
         this.innerText = "CASH OUT";
         let loop = setInterval(() => {
             if(!rodando) { clearInterval(loop); saldo += (aposta * m); exp+=5; resetA(); return; }
             m += 0.05; document.getElementById('multiplier').innerText = m.toFixed(2) + "x";
-            if(m >= crash) { clearInterval(loop); rodando = false; alert("Crash!"); resetA(); }
+            if(m >= crash) { clearInterval(loop); rodando = false; alert("Crashed!"); resetA(); }
         }, 100);
     };
     function resetA() { document.getElementById('btnAviator').innerText = "APOSTAR"; atualizar(); }
 
     function jogarTiger() {
-        if(saldo < aposta) return alert("Sem saldo");
+        if(saldo < aposta) return alert("Sem saldo!");
         saldo -= aposta; exp+=10;
         let t = setInterval(() => {
             const e = ["🐯","💰","🧧"];
@@ -217,7 +237,7 @@
             document.getElementById('t2').innerText = e[Math.floor(Math.random()*3)];
             document.getElementById('t3').innerText = e[Math.floor(Math.random()*3)];
         }, 100);
-        setTimeout(() => { clearInterval(t); if(document.getElementById('t1').innerText == document.getElementById('t2').innerText) { saldo += aposta*5; alert("Ganhou!"); } atualizar(); }, 1000);
+        setTimeout(() => { clearInterval(t); if(document.getElementById('t1').innerText == document.getElementById('t2').innerText) { saldo += aposta*5; alert("GANHOU NO TIGRE!"); } atualizar(); }, 1000);
     }
 
     let mOn = false; let bPos = -1; let lMines = 0;
@@ -227,14 +247,14 @@
             let s = document.createElement('div'); s.className = 'mines-square';
             s.onclick = () => {
                 if(!mOn || s.innerText != "") return;
-                if(i === bPos) { s.innerText = "💣"; s.style.background = "red"; alert("Boom!"); mOn=false; atualizar(); }
-                else { s.innerText = "💎"; s.style.background = "green"; lMines *= 1.5; document.getElementById('minesProfit').innerText = "LUCRO: R$ "+lMines.toFixed(2); }
+                if(i === bPos) { s.innerText = "💣"; s.style.background = "red"; alert("Mina!"); mOn=false; atualizar(); }
+                else { s.innerText = "💎"; s.style.background = "green"; lMines *= 1.4; document.getElementById('minesProfit').innerText = "LUCRO: R$ "+lMines.toFixed(2); }
             };
             grid.appendChild(s);
         }
     }
     function iniciarMines() {
-        if(!mOn) { if(saldo < aposta) return alert("Sem saldo"); saldo -= aposta; mOn = true; lMines = aposta; bPos = Math.floor(Math.random()*16); renderGrid(); atualizar(); document.getElementById('btnMines').innerText = "COLETAR"; }
+        if(!mOn) { if(saldo < aposta) return alert("Sem saldo!"); saldo -= aposta; mOn = true; lMines = aposta; bPos = Math.floor(Math.random()*16); renderGrid(); atualizar(); document.getElementById('btnMines').innerText = "COLETAR"; }
         else { saldo += lMines; mOn = false; document.getElementById('btnMines').innerText = "INICIAR"; atualizar(); }
     }
 </script>
