@@ -8,7 +8,7 @@
         :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; --gold: #f1c40f; --danger: #e74c3c; --menu-bg: #0b1437; }
         body { background: var(--bg); color: white; margin: 0; font-family: -apple-system, system-ui, sans-serif; overflow-x: hidden; user-select: none; }
 
-        /* TELA DE LOGIN */
+        /* LOGIN */
         .auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .auth-box { width: 85%; text-align: center; background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #1e2a5a; }
         .input-app { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; border: 1px solid #1e2a5a; background: #060b21; color: white; font-size: 16px; box-sizing: border-box; }
@@ -24,9 +24,9 @@
         .menu-header { padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1e2a5a; }
         .menu-row { display: flex; justify-content: space-between; padding: 18px 15px; border-bottom: 1px solid #1e2a5a; font-size: 0.9rem; font-weight: bold; }
 
-        /* BANNER E NOTIFICAÇÃO */
+        /* BANNERS */
         .banner-promo { width: 90%; height: 80px; margin: 15px auto; border-radius: 15px; background: linear-gradient(45deg, #1e2a5a, #2ecc71); display: flex; align-items: center; justify-content: center; font-weight: 900; text-align: center; font-size: 0.8rem; border: 1px solid var(--primary); }
-        #notif { position: fixed; top: -60px; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 10px 20px; border-radius: 30px; font-weight: bold; z-index: 6000; transition: 0.6s; font-size: 0.75rem; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        #notif { position: fixed; top: -60px; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 10px 20px; border-radius: 30px; font-weight: bold; z-index: 6000; transition: 0.6s; font-size: 0.75rem; }
 
         /* JOGOS AREA */
         .game-container { padding: 0 15px 120px; }
@@ -34,22 +34,17 @@
         .game-card.active { display: block; }
         .display-main { height: 180px; background: #000; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid #1e2a5a; position: relative; overflow: hidden; }
         
-        /* ROLETA CSS */
+        /* ROLETA */
         #roulette { width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--gold); transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1); background: conic-gradient(#e74c3c 0% 12.5%, #000 12.5% 25%, #e74c3c 25% 37.5%, #000 37.5% 50%, #e74c3c 50% 62.5%, #000 62.5% 75%, #e74c3c 75% 87.5%, #000 87.5% 100%); }
         .pointer { position: absolute; top: 10px; z-index: 10; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 20px solid var(--gold); }
 
-        /* MINES GRID */
+        /* MINES */
         .mines-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 15px 0; }
         .square { background: #1e2a5a; height: 60px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 
         .btn-play { width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 15px; color: #000; font-weight: 900; text-transform: uppercase; cursor: pointer; }
-        .bet-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 15px; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .btn-m { background: #1e2a5a; border: 1px solid var(--accent); color: white; width: 35px; height: 35px; border-radius: 50%; border:none; }
+        .wa-btn { position: fixed; bottom: 100px; right: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; z-index: 1000; text-decoration: none; color: white; }
 
-        /* SUPORTE WHATSAPP */
-        .wa-btn { position: fixed; bottom: 100px; right: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; z-index: 1000; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-
-        /* NAV TABS */
         .nav-tabs { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0 35px; border-top: 1px solid #1e2a5a; z-index: 900; }
         .tab { font-size: 1.6rem; opacity: 0.4; }
         .tab.active { opacity: 1; color: var(--primary); }
@@ -57,15 +52,14 @@
 </head>
 <body>
 
-<div id="notif">Alguém acabou de ganhar R$ 280,00! 🔥</div>
+<div id="notif">Prêmio de R$ 320,00 saindo agora! 🔥</div>
 
 <div id="authScreen" class="auth-overlay">
     <div class="auth-box">
-        <h2 id="authTitle" style="color:var(--primary)">ESPORTES VIP</h2>
+        <h2 style="color:var(--primary)">ACESSO VIP</h2>
         <input type="text" id="userNick" placeholder="Usuário" class="input-app">
         <input type="password" id="userPass" placeholder="Senha" class="input-app">
-        <button onclick="logar()" class="btn-play">ENTRAR NA CONTA</button>
-        <p onclick="alert('Cadastro liberado!')" style="margin-top:15px; font-size:0.7rem; color:gray;">Esqueceu a senha? Chame o suporte.</p>
+        <button onclick="logar()" class="btn-play">ENTRAR</button>
     </div>
 </div>
 
@@ -74,11 +68,11 @@
         <div style="font-weight: 900;">ESPORTES DA SORTE</div>
         <div onclick="toggleMenu()" style="font-size: 1.8rem;">✕</div>
     </div>
-    <div class="menu-row" onclick="switchG('tiger')">🐯 Fortune Tiger <span>❯</span></div>
+    <div class="menu-row" onclick="switchG('tiger')">🐯 Tiger <span>❯</span></div>
     <div class="menu-row" onclick="switchG('aviator')">🚀 Aviator <span>❯</span></div>
     <div class="menu-row" onclick="switchG('mines')">💣 Mines <span>❯</span></div>
-    <div class="menu-row" onclick="switchG('roleta')">🎡 Roleta VIP <span>❯</span></div>
-    <div class="menu-row" onclick="abrirDep()" style="color:var(--primary)">💰 Depositar PIX <span>❯</span></div>
+    <div class="menu-row" onclick="switchG('roleta')">🎡 Roleta <span>❯</span></div>
+    <div class="menu-row" onclick="abrirDep()" style="color:var(--primary)">💰 Depósito PIX <span>❯</span></div>
     <div class="menu-row" style="color:var(--danger)" onclick="location.reload()">🚪 Sair <span>❯</span></div>
 </div>
 
@@ -89,35 +83,27 @@
         <button onclick="abrirDep()" style="background:var(--primary); border:none; padding:8px 12px; border-radius:8px; font-weight:bold;">DEPÓSITO</button>
     </header>
 
-    <div class="banner-promo" id="bannerTxt">SORTEIO DE R$ 500,00 HOJE! 🍀</div>
+    <div class="banner-promo" id="bannerTxt">BÔNUS DE 100% NO PIX! 💰</div>
 
     <div class="game-container">
         <div id="game-aviator" class="game-card active">
-            <h3 style="color:var(--accent)">🚀 AVIATOR PRO</h3>
+            <h3 style="color:var(--accent)">🚀 AVIATOR</h3>
             <div class="display-main" id="avDisplay" style="font-size:3.5rem; font-weight:900;">1.00x</div>
-            <div class="bet-box">
-                <button class="btn-m" onclick="altAposta(-1)">-</button>
-                <b id="betTxt">R$ 2.00</b>
-                <button class="btn-m" onclick="altAposta(1)">+</button>
-            </div>
-            <button id="btnAv" class="btn-play" onclick="startAviator()">APOSTAR</button>
+            <button id="btnAv" class="btn-play" onclick="startAviator()">APOSTAR (R$ 2.00)</button>
         </div>
-
         <div id="game-tiger" class="game-card">
             <h3 style="color:var(--gold)">🐯 FORTUNE TIGER</h3>
             <div class="display-main" id="tiDisplay" style="font-size:3rem;">🐯🐯🐯</div>
-            <button class="btn-play" style="background:var(--gold)" onclick="startTiger()">GIRAR AGORA</button>
+            <button class="btn-play" style="background:var(--gold)" onclick="startTiger()">GIRAR</button>
         </div>
-
         <div id="game-mines" class="game-card">
-            <h3 style="color:var(--danger)">💣 MINES PREMIUM</h3>
+            <h3 style="color:var(--danger)">💣 MINES</h3>
             <div id="miProfit" style="color:var(--primary); font-weight:bold; margin-bottom:10px;">LUCRO: R$ 0.00</div>
             <div id="minesGrid" class="mines-grid"></div>
-            <button id="btnMi" class="btn-play" style="background:var(--danger)" onclick="startMines()">INICIAR RODADA</button>
+            <button id="btnMi" class="btn-play" style="background:var(--danger)" onclick="startMines()">INICIAR</button>
         </div>
-
         <div id="game-roleta" class="game-card">
-            <h3 style="color:var(--gold)">🎡 ROLETA VIP</h3>
+            <h3 style="color:var(--gold)">🎡 ROLETA</h3>
             <div class="display-main"><div class="pointer"></div><div id="roulette"></div></div>
             <button id="btnRo" class="btn-play" style="background:var(--gold)" onclick="startRoleta()">GIRAR (R$ 5.00)</button>
         </div>
@@ -135,12 +121,9 @@
 
 <script>
     let saldo = parseFloat(localStorage.getItem('saldo')) || 0;
-    let aposta = 2.00;
     let jogando = false;
 
-    // LOGIN
     function logar() {
-        if(document.getElementById('userNick').value.length < 2) return alert("Digite seu usuário!");
         document.getElementById('authScreen').style.display = 'none';
         document.getElementById('mainApp').style.display = 'block';
         atualizar(); renderMines();
@@ -148,7 +131,6 @@
 
     function atualizar() {
         document.getElementById('saldoTxt').innerText = saldo.toFixed(2);
-        document.getElementById('betTxt').innerText = "R$ " + aposta.toFixed(2);
         localStorage.setItem('saldo', saldo);
     }
 
@@ -161,29 +143,25 @@
         document.getElementById('sideMenu').classList.remove('active');
     }
 
-    function altAposta(v) { if(!jogando) { aposta = Math.max(1, aposta + v); atualizar(); } }
-
     function abrirDep() {
-        let v = prompt("Valor do depósito via PIX:");
-        if(v) { saldo += parseFloat(v); alert("Depósito Recebido!"); atualizar(); }
+        let v = prompt("Valor do depósito:");
+        if(v) { saldo += parseFloat(v); atualizar(); }
     }
 
-    // AVIATOR REAL
     function startAviator() {
         if(jogando) { jogando = false; return; }
-        if(saldo < aposta) return alert("Sem saldo!");
-        saldo -= aposta; jogando = true; atualizar();
-        let m = 1.00; let crash = (Math.random() * 3 + 1.2).toFixed(2);
+        if(saldo < 2) return alert("Sem saldo!");
+        saldo -= 2; jogando = true; atualizar();
+        let m = 1.00; let crash = (Math.random() * 2.5 + 1.1).toFixed(2);
         document.getElementById('btnAv').innerText = "CASH OUT";
         let loop = setInterval(() => {
-            if(!jogando) { clearInterval(loop); saldo += (aposta * m); resAv(); return; }
+            if(!jogando) { clearInterval(loop); saldo += (2 * m); resAv(); return; }
             m += 0.04; document.getElementById('avDisplay').innerText = m.toFixed(2) + "x";
             if(m >= crash) { clearInterval(loop); jogando = false; alert("Crashed!"); resAv(); }
         }, 100);
     }
-    function resAv() { document.getElementById('btnAv').innerText = "APOSTAR"; document.getElementById('avDisplay').innerText = "1.00x"; atualizar(); }
+    function resAv() { document.getElementById('btnAv').innerText = "APOSTAR (R$ 2.00)"; atualizar(); }
 
-    // MINES REAL
     let mAtivo = false; let bPos = -1; let mLucro = 0;
     function renderMines() {
         const grid = document.getElementById('minesGrid'); grid.innerHTML = '';
@@ -191,54 +169,38 @@
             let s = document.createElement('div'); s.className = 'square';
             s.onclick = () => {
                 if(!mAtivo || s.innerText != "") return;
-                if(i === bPos) { s.innerText = "💣"; s.style.background = "red"; mAtivo = false; alert("Explodiu!"); resMines(); }
+                if(i === bPos) { s.innerText = "💣"; s.style.background = "red"; mAtivo = false; alert("Boom!"); resMines(); }
                 else { s.innerText = "💎"; s.style.background = "green"; mLucro *= 1.4; document.getElementById('miProfit').innerText = "LUCRO: R$ " + mLucro.toFixed(2); }
             };
             grid.appendChild(s);
         }
     }
     function startMines() {
-        if(!mAtivo) {
-            if(saldo < aposta) return alert("Sem saldo!");
-            saldo -= aposta; mAtivo = true; mLucro = aposta; bPos = Math.floor(Math.random()*16);
-            renderMines(); atualizar(); document.getElementById('btnMi').innerText = "COLETAR";
-        } else { saldo += mLucro; mAtivo = false; resMines(); }
+        if(!mAtivo) { if(saldo < 2) return; saldo -= 2; mAtivo = true; mLucro = 2; bPos = Math.floor(Math.random()*16); renderMines(); atualizar(); document.getElementById('btnMi').innerText = "COLETAR"; }
+        else { saldo += mLucro; mAtivo = false; resMines(); }
     }
-    function resMines() { document.getElementById('btnMi').innerText = "INICIAR RODADA"; document.getElementById('miProfit').innerText = "LUCRO: R$ 0.00"; atualizar(); }
+    function resMines() { document.getElementById('btnMi').innerText = "INICIAR"; atualizar(); }
 
-    // ROLETA REAL
     function startRoleta() {
-        if(jogando || saldo < 5) return alert("Saldo insuficiente (Min: R$ 5.00)!");
+        if(jogando || saldo < 5) return;
         jogando = true; saldo -= 5; atualizar();
         const wheel = document.getElementById('roulette');
         const deg = Math.floor(3000 + Math.random() * 3000);
         wheel.style.transform = `rotate(${deg}deg)`;
-        setTimeout(() => {
-            jogando = false;
-            if(Math.random() > 0.6) { let w = 15; saldo += w; alert("Ganhou R$ "+w); }
-            else { alert("Não foi dessa vez!"); }
-            atualizar();
-        }, 4000);
+        setTimeout(() => { jogando = false; if(Math.random() > 0.6) { saldo += 15; alert("Ganhou R$ 15!"); } atualizar(); }, 4000);
     }
 
-    // TIGER
     function startTiger() {
-        if(saldo < aposta) return;
-        saldo -= aposta; atualizar();
-        let t = setInterval(() => { document.getElementById('tiDisplay').innerText = "🧧💰🐯🍊"[Math.floor(Math.random()*4)].repeat(3); }, 100);
-        setTimeout(() => { clearInterval(t); if(Math.random()>0.8) { saldo += aposta*5; alert("GANHOU!"); } atualizar(); }, 1200);
+        if(saldo < 2) return;
+        saldo -= 2; atualizar();
+        setTimeout(() => { if(Math.random()>0.8) { saldo += 10; alert("Ganhou!"); } atualizar(); }, 800);
     }
 
-    // EXTRAS
     setInterval(() => {
         const n = document.getElementById('notif');
         n.style.top = '20px';
         setTimeout(() => n.style.top = '-60px', 3000);
     }, 10000);
-
-    const frases = ["BÔNUS DE 100% NO PIX! 💰", "TIGRINHO PAGANDO MUITO! 🐯", "ROLETA VIP LIBERADA! 🎡"];
-    let fIdx = 0;
-    setInterval(() => { fIdx = (fIdx + 1) % frases.length; document.getElementById('bannerTxt').innerText = frases[fIdx]; }, 4000);
 
     atualizar();
 </script>
