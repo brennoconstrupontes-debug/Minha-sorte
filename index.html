@@ -3,203 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Esportes da Sorte VIP</title>
+    <title>Esportes da Sorte | VIP Pro</title>
     <style>
         :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; --gold: #f1c40f; --danger: #e74c3c; --menu-bg: #0b1437; }
         body { background: var(--bg); color: white; margin: 0; font-family: -apple-system, system-ui, sans-serif; overflow-x: hidden; user-select: none; }
 
-        /* AUTH SCREEN */
-        .auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .auth-box { width: 85%; text-align: center; background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #1e2a5a; }
-        .input-app { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; border: 1px solid #1e2a5a; background: #060b21; color: white; font-size: 16px; box-sizing: border-box; }
-
-        /* HEADER */
+        /* HEADER & MENU */
         .header { padding: 15px; background: var(--card); border-bottom: 1px solid #1e2a5a; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
         .menu-icon { font-size: 1.5rem; color: var(--primary); cursor: pointer; }
-        .balance-btn { background: rgba(46, 204, 113, 0.1); padding: 8px 15px; border-radius: 25px; border: 1px solid var(--primary); color: var(--primary); font-weight: 800; }
+        .balance-btn { background: rgba(46, 204, 113, 0.1); padding: 8px 15px; border-radius: 25px; border: 1px solid var(--primary); color: var(--primary); font-weight: 800; border: none; }
 
-        /* MENU LATERAL (DRAWER) */
+        /* MENU LATERAL ESTILO VÍDEO */
         .side-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100%; background: var(--menu-bg); z-index: 5000; transition: 0.3s; overflow-y: auto; }
         .side-menu.active { left: 0; }
-        .menu-header { padding: 15px; display: flex; align-items: center; justify-content: space-between; }
-        .search-box { padding: 0 15px; margin-bottom: 20px; }
-        .search-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #1e2a5a; background: #060b21; color: white; box-sizing: border-box; }
+        .menu-header { padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1e2a5a; }
+        .search-box { padding: 15px; }
+        .search-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #1e2a5a; background: #060b21; color: white; }
         .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 15px; }
-        .cat-card { background: var(--card); border-radius: 12px; padding: 10px; text-align: center; font-size: 0.65rem; border: 1px solid #1e2a5a; }
+        .cat-card { background: var(--card); border-radius: 12px; padding: 10px; text-align: center; font-size: 0.6rem; border: 1px solid #1e2a5a; }
         .menu-list-section { padding: 15px; }
-        .section-title { color: #5a6691; font-size: 0.8rem; text-transform: uppercase; margin: 20px 0 10px; font-weight: bold; }
+        .section-title { color: #5a6691; font-size: 0.7rem; text-transform: uppercase; margin: 20px 0 10px; font-weight: bold; }
         .menu-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #1e2a5a; font-size: 0.9rem; }
 
-        /* GAMES AREA */
-        .game-container { padding: 15px; margin-bottom: 100px; }
-        .game-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid #1e2a5a; text-align: center; display: none; margin-bottom: 20px; }
-        .game-card.active { display: block; }
-        .display-main { height: 160px; background: #000; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid #1e2a5a; font-size: 3rem; font-weight: 900; }
-        
-        .btn-play { width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 15px; color: #000; font-weight: 900; text-transform: uppercase; cursor: pointer; }
-        .mines-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 15px 0; }
-        .square { background: #1e2a5a; height: 60px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        /* BANNERS */
+        .banner-slider { width: 92%; height: 120px; margin: 15px auto; border-radius: 15px; background: linear-gradient(45deg, #1e2a5a, #3498db); display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold; position: relative; overflow: hidden; }
 
-        /* MODAL PIX */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { background: var(--card); width: 85%; padding: 25px; border-radius: 30px; text-align: center; border: 1px solid var(--primary); }
-        .pix-box { background: #000; padding: 15px; border-radius: 10px; margin: 15px 0; display: flex; align-items: center; justify-content: space-between; border: 1px dashed var(--primary); }
+        /* GAMES */
+        .game-container { padding: 0 15px 100px; }
+        .game-card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #1e2a5a; text-align: center; display: none; margin-bottom: 20px; }
+        .game-card.active { display: block; }
+        .display-main { height: 140px; background: #000; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-size: 3rem; font-weight: 900; color: var(--primary); }
+        .btn-play { width: 100%; padding: 15px; background: var(--primary); border: none; border-radius: 12px; color: #000; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+
+        /* WHATSAPP FLOAT */
+        .wa-float { position: fixed; bottom: 85px; right: 20px; background: #25d366; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+        /* NOTIFICAÇÃO */
+        #notif { position: fixed; top: -50px; left: 50%; transform: translateX(-50%); background: var(--primary); color: black; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; z-index: 6000; transition: 0.5s; }
 
         /* NAV TABS */
-        .nav-tabs { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #1e2a5a; z-index: 900; padding-bottom: 20px; }
-        .tab { font-size: 1.5rem; opacity: 0.5; cursor: pointer; }
+        .nav-tabs { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 12px 0 25px; border-top: 1px solid #1e2a5a; z-index: 900; }
+        .tab { font-size: 1.4rem; opacity: 0.4; text-align: center; }
+        .tab span { display: block; font-size: 0.6rem; margin-top: 4px; }
         .tab.active { opacity: 1; color: var(--primary); }
     </style>
 </head>
 <body>
 
-<div id="authScreen" class="auth-overlay">
-    <div class="auth-box">
-        <h2 id="authTitle">CADASTRAR</h2>
-        <input type="text" id="userNick" placeholder="Usuário" class="input-app">
-        <input type="password" id="userPass" placeholder="Senha" class="input-app">
-        <button onclick="handleAuth()" class="btn-play">ENTRAR NO APP</button>
-        <p onclick="toggleAuth()" style="margin-top:15px; color:var(--accent); font-size: 0.8rem; cursor:pointer">Alternar Entrar/Cadastrar</p>
-    </div>
-</div>
+<div id="notif">Alguém ganhou R$ 250,00!</div>
 
 <div id="sideMenu" class="side-menu">
     <div class="menu-header">
         <div style="font-weight: 900;">ESPORTES DA SORTE</div>
-        <div onclick="toggleMenu()" style="font-size: 1.5rem; cursor:pointer">✕</div>
+        <div onclick="toggleMenu()" style="font-size: 1.5rem;">✕</div>
     </div>
-    <div class="search-box"><input type="text" class="search-input" placeholder="Buscar no cassino..."></div>
+    <div class="search-box"><input type="text" class="search-input" placeholder="Buscar jogos..."></div>
     <div class="categories-grid">
-        <div class="cat-card">⚽<br>Esportes</div><div class="cat-card">🕒<br>Ao Vivo</div>
-        <div class="cat-card">🎰<br>Cassino</div><div class="cat-card">🎲<br>Vivo</div>
+        <div class="cat-card">⚽<br>Sports</div><div class="cat-card">🕒<br>Ao Vivo</div>
+        <div class="cat-card">🎰<br>Cassino</div><div class="cat-card">🏆<br>VIP</div>
     </div>
     <div class="menu-list-section">
-        <div class="section-title">Jogos Disponíveis</div>
-        <div class="menu-row" onclick="switchG('tiger')"><span>🐯 Fortune Tiger</span> ❯</div>
+        <div class="section-title">Principais Jogos</div>
+        <div class="menu-row" onclick="switchG('tiger')"><span>🐯 Tigrinho</span> ❯</div>
         <div class="menu-row" onclick="switchG('aviator')"><span>🚀 Aviator</span> ❯</div>
         <div class="menu-row" onclick="switchG('mines')"><span>💣 Mines</span> ❯</div>
-        <div class="section-title">Conta</div>
-        <div class="menu-row" onclick="abrirDep()"><span>💰 Depositar PIX</span> ❯</div>
+        <div class="section-title">Minha Conta</div>
+        <div class="menu-row" onclick="alert('Link de convite copiado!')"><span>🔗 Indique e Ganhe</span> ❯</div>
         <div class="menu-row" onclick="location.reload()"><span>🚪 Sair</span> ❯</div>
     </div>
 </div>
 
-<div id="depositoModal" class="modal">
-    <div class="modal-content">
-        <h3 style="color:var(--primary)">DEPÓSITO REAL</h3>
-        <p style="font-size: 0.8rem;">Copie a chave PIX e pague no seu banco.</p>
-        <div style="background:white; padding:10px; display:inline-block; border-radius:10px; margin:10px;">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SUA_CHAVE_AQUI" width="130">
-        </div>
-        <div class="pix-box">
-            <span id="pixKey" style="font-size: 0.7rem; color: var(--primary);">SUA_CHAVE_PIX_AQUI</span>
-            <button onclick="copiarPix()" style="background:none; border:none; font-size:1.2rem; cursor:pointer">📋</button>
-        </div>
-        <button class="btn-play" onclick="fecharDep()">JÁ PAGUEI</button>
-    </div>
-</div>
-
-<div id="mainApp" style="display:none;">
+<div id="mainApp">
     <header class="header">
         <div class="menu-icon" onclick="toggleMenu()">☰</div>
-        <div style="font-weight: 900; font-size: 0.8rem;">ESPORTES DA SORTE</div>
-        <div class="balance-btn" onclick="abrirDep()">R$ <span id="saldoTxt">0.00</span></div>
+        <div class="balance-btn" onclick="addSaldo()">R$ <span id="valSaldo">0.00</span></div>
+        <button style="background:var(--primary); border:none; padding:8px 15px; border-radius:8px; font-weight:bold; color:black;">DEPÓSITO</button>
     </header>
+
+    <div class="banner-slider" id="banner">
+        <div>BÔNUS DE 100% NO PRIMEIRO PIX! 🚀</div>
+    </div>
 
     <div class="game-container">
         <div id="game-aviator" class="game-card active">
             <h3 style="color:var(--accent)">🚀 AVIATOR</h3>
-            <div class="display-main" id="avDisplay">1.00x</div>
-            <button class="btn-play" onclick="jogarAviator()">APOSTAR</button>
+            <div class="display-main" id="avOut">1.00x</div>
+            <button class="btn-play" onclick="playAviator()">APOSTAR</button>
         </div>
 
         <div id="game-tiger" class="game-card">
             <h3 style="color:var(--gold)">🐯 FORTUNE TIGER</h3>
-            <div class="display-main" id="tigerDisplay">🐯🐯🐯</div>
-            <button class="btn-play" style="background:var(--gold)" onclick="jogarTiger()">GIRAR</button>
+            <div class="display-main" id="tiOut">🐯🐯🐯</div>
+            <button class="btn-play" style="background:var(--gold)" onclick="playTiger()">GIRAR</button>
         </div>
 
         <div id="game-mines" class="game-card">
             <h3 style="color:var(--danger)">💣 MINES</h3>
-            <div id="minesGrid" class="mines-grid"></div>
-            <button class="btn-play" style="background:var(--danger)" onclick="initMines()">INICIAR MINES</button>
+            <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:8px;" id="miGrid"></div>
+            <button class="btn-play" style="background:var(--danger); margin-top:15px;" onclick="playMines()">NOVO JOGO</button>
         </div>
     </div>
 
+    <a href="https://wa.me/SEUNUMERO" class="wa-float">💬</a>
+
     <nav class="nav-tabs">
-        <div class="tab" onclick="switchG('tiger')">🐯</div>
-        <div class="tab active" onclick="switchG('aviator')">🚀</div>
-        <div class="tab" onclick="switchG('mines')">💣</div>
+        <div class="tab" onclick="switchG('tiger')">🐯<span>Tiger</span></div>
+        <div class="tab active" onclick="switchG('aviator')">🚀<span>Aviator</span></div>
+        <div class="tab" onclick="switchG('mines')">💣<span>Mines</span></div>
     </nav>
 </div>
 
 <script>
-    let saldo = parseFloat(localStorage.getItem('saldo')) || 0;
-    let rodando = false;
+    let saldo = 0;
+    let jogando = false;
 
-    function handleAuth() {
-        const u = document.getElementById('userNick').value;
-        if(!u) return alert("Digite um nome!");
-        document.getElementById('authScreen').style.display = 'none';
-        document.getElementById('mainApp').style.display = 'block';
-        atualizar();
+    function addSaldo() {
+        let v = prompt("Quanto deseja depositar via PIX?");
+        if(v) { saldo += parseFloat(v); update(); }
     }
 
-    function toggleAuth() { alert("Modo alternado! Pode entrar."); }
-
-    function atualizar() {
-        document.getElementById('saldoTxt').innerText = saldo.toFixed(2);
-        localStorage.setItem('saldo', saldo);
-    }
-
+    function update() { document.getElementById('valSaldo').innerText = saldo.toFixed(2); }
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
 
     function switchG(g) {
-        document.getElementById('sideMenu').classList.remove('active');
         document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
         document.getElementById('game-'+g).classList.add('active');
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        if(g === 'mines') initMines();
+        if(g === 'mines') playMines();
+        toggleMenu();
     }
 
-    function abrirDep() { document.getElementById('depositoModal').style.display = 'flex'; }
-    function fecharDep() { 
-        document.getElementById('depositoModal').style.display = 'none';
-        // Simulação de depósito para sua avó não travar
-        let add = prompt("Quanto você depositou?");
-        if(add) { saldo += parseFloat(add); atualizar(); }
-    }
-
-    function copiarPix() {
-        const key = document.getElementById('pixKey').innerText;
-        navigator.clipboard.writeText(key);
-        alert("Chave PIX copiada!");
-    }
-
-    // JOGOS SIMPLES PARA NÃO TRAVAR
-    function jogarAviator() {
-        if(rodando) return;
-        rodando = true; let m = 1.0;
-        let t = setInterval(() => {
-            m += 0.1; document.getElementById('avDisplay').innerText = m.toFixed(2) + "x";
-            if(Math.random() > 0.95) { clearInterval(t); alert("Crashed em " + m.toFixed(2)); rodando = false; }
+    // Lógica Aviator
+    function playAviator() {
+        if(jogando) return; jogando = true; let m = 1.0;
+        let iv = setInterval(() => {
+            m += 0.05; document.getElementById('avOut').innerText = m.toFixed(2)+'x';
+            if(Math.random() > 0.96) { clearInterval(iv); alert("Crashou!"); jogando = false; }
         }, 100);
     }
 
-    function jogarTiger() {
-        const icons = ["🐯", "💰", "🧧", "🍊"];
-        document.getElementById('tigerDisplay').innerText = icons[Math.floor(Math.random()*4)] + icons[Math.floor(Math.random()*4)] + icons[Math.floor(Math.random()*4)];
+    // Lógica Tiger
+    function playTiger() {
+        const i = ["🐯","💰","🧧","🍊","✨"];
+        document.getElementById('tiOut').innerText = i[Math.floor(Math.random()*5)] + i[Math.floor(Math.random()*5)] + i[Math.floor(Math.random()*5)];
     }
 
-    function initMines() {
-        const grid = document.getElementById('minesGrid'); grid.innerHTML = '';
+    // Lógica Mines
+    function playMines() {
+        const g = document.getElementById('miGrid'); g.innerHTML = '';
         for(let i=0; i<16; i++) {
-            let s = document.createElement('div'); s.className = 'square';
-            s.onclick = () => s.innerText = Math.random() > 0.2 ? "💎" : "💣";
-            grid.appendChild(s);
+            let s = document.createElement('div');
+            s.style.cssText = "height:60px; background:#1e2a5a; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.5rem;";
+            s.onclick = () => s.innerText = Math.random() > 0.3 ? "💎" : "💣";
+            g.appendChild(s);
         }
     }
+
+    // Banners Rotativos
+    const frases = ["GANHE R$ 50 NO CONVITE! 💸", "O TIGRE ESTÁ SOLTO! 🐯", "AVIATOR PAGANDO MUITO! 🚀"];
+    let fIdx = 0;
+    setInterval(() => {
+        fIdx = (fIdx + 1) % frases.length;
+        document.getElementById('banner').innerText = frases[fIdx];
+    }, 4000);
+
+    // Notificações Fake
+    setInterval(() => {
+        const n = document.getElementById('notif');
+        n.innerText = `🔥 Usuário ${Math.floor(Math.random()*900)} acabou de ganhar R$ ${Math.floor(Math.random()*500)}!`;
+        n.style.top = '20px';
+        setTimeout(() => n.style.top = '-50px', 3000);
+    }, 10000);
+
+    update();
+    playMines();
 </script>
 </body>
 </html>
