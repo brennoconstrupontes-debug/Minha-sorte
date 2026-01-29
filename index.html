@@ -5,143 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Esportes da Sorte VIP</title>
-    
+    <title>Esportes da Sorte ULTRA</title>
     <style>
-        :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; }
-        body { 
-            background: var(--bg); color: white; margin: 0; 
-            font-family: -apple-system, system-ui, sans-serif;
-            padding-top: env(safe-area-inset-top);
-            overflow-x: hidden;
-        }
+        :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; --gold: #f1c40f; --danger: #e74c3c; }
+        body { background: var(--bg); color: white; margin: 0; font-family: -apple-system, system-ui, sans-serif; padding-top: env(safe-area-inset-top); user-select: none; overflow-x: hidden; }
         
-        /* NOTIFICAÇÃO FLUTUANTE */
-        #notification-area {
-            position: fixed; top: 50px; left: 50%; transform: translateX(-50%);
-            z-index: 3000; width: 90%; pointer-events: none;
-        }
-        .notif {
-            background: rgba(10, 16, 46, 0.95);
-            border-left: 4px solid var(--primary);
-            padding: 10px 15px; border-radius: 8px;
-            margin-bottom: 10px; font-size: 0.8rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            animation: slideIn 0.5s ease-out, fadeOut 0.5s 3s forwards;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); visibility: hidden; } }
+        /* HEADER */
+        .header { display: flex; justify-content: space-between; padding: 15px; background: var(--card); border-bottom: 1px solid #1e2a5a; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .balance-btn { background: rgba(46, 204, 113, 0.1); padding: 8px 15px; border-radius: 25px; border: 1px solid var(--primary); color: var(--primary); font-weight: 800; }
 
-        /* INTERFACE */
-        .navbar { display: flex; justify-content: space-between; padding: 15px; background: var(--card); border-bottom: 1px solid #1e2a5a; align-items: center; }
-        .balance-box { background: rgba(46, 204, 113, 0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--primary); }
-        .balance-value { color: var(--primary); font-weight: bold; }
-        
-        .game-screen { padding: 15px; margin-bottom: 100px; }
-        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #1e2a5a; text-align: center; }
-        .canvas-area { height: 180px; background: #000; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid #1e2a5a; }
-        #multiplier { font-size: 3.5rem; font-weight: 800; color: white; }
-        
-        .btn-main { width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 15px; color: #000; font-weight: bold; font-size: 1.1rem; }
-        
-        /* MENU INFERIOR */
-        .tab-bar { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; padding: 15px 0; border-top: 1px solid #1e2a5a; justify-content: space-around; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
-        .tab-item { text-align: center; font-size: 1.5rem; filter: grayscale(1); transition: 0.3s; }
-        .tab-item.active { filter: grayscale(0); transform: scale(1.2); }
+        /* PAINEL ADMIN SEGRETO */
+        #adminPanel { display: none; background: var(--gold); color: black; padding: 10px; font-size: 0.8rem; font-weight: bold; text-align: center; }
 
-        /* AUTH */
-        .auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 4000; display: flex; align-items: center; justify-content: center; }
-        .auth-box { width: 85%; text-align: center; }
-        .input-app { width: 100%; padding: 16px; margin-bottom: 10px; border-radius: 12px; border: 1px solid #1e2a5a; background: #0d1435; color: white; font-size: 16px; box-sizing: border-box; }
+        /* JOGOS */
+        .game-container { padding: 15px; margin-bottom: 150px; }
+        .game-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid #1e2a5a; text-align: center; display: none; }
+        .game-card.active { display: block; }
+        .display-main { height: 160px; background: #000; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid #1e2a5a; overflow: hidden; }
+        #multiplier { font-size: 3.5rem; font-weight: 900; }
+        
+        .btn-play { width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 15px; color: #000; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; }
+
+        /* HISTÓRICO DE APOSTAS */
+        .history-box { margin-top: 20px; background: rgba(0,0,0,0.3); border-radius: 15px; padding: 10px; font-size: 0.7rem; height: 120px; overflow: hidden; }
+        .history-item { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #1e2a5a; animation: slideUp 0.5s; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* TABS */
+        .nav-tabs { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #1e2a5a; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
+        .tab { font-size: 1.6rem; opacity: 0.4; transition: 0.3s; }
+        .tab.active { opacity: 1; transform: scale(1.2); }
     </style>
 </head>
 <body>
 
-<div id="notification-area"></div>
+<audio id="sndWin" src="https://www.myinstants.com/media/sounds/coins.mp3"></audio>
+<audio id="sndLose" src="https://www.myinstants.com/media/sounds/erro.mp3"></audio>
 
-<div id="auth-screen" class="auth-overlay">
-    <div class="auth-box">
-        <h1 style="letter-spacing: -1px; margin-bottom: 30px;">ESPORTES DA SORTE</h1>
-        <input type="text" id="user" placeholder="Usuário" class="input-app">
-        <input type="password" id="pass" placeholder="Senha" class="input-app">
-        <button onclick="entrar()" class="btn-main">ACESSAR CONTA</button>
-        <p style="font-size: 0.8rem; color: #3498db; margin-top: 20px;">Use o código <b>admin123</b> para modo admin</p>
-    </div>
+<div id="adminPanel">
+    MODO DONO ATIVO: 
+    <button onclick="modoDono='ganhar'">FORÇAR VITÓRIA</button>
+    <button onclick="modoDono='perder'">FORÇAR LOSS</button>
+    <button onclick="saldo += 1000; atualizar()">+R$1000</button>
 </div>
 
-<div id="app" style="display:none;">
-    <header class="navbar">
-        <div style="font-weight: 800; font-size: 0.9rem;">ESPORTES DA SORTE</div>
-        <div class="balance-box"><span class="balance-value" id="valSaldo">R$ 50.00</span></div>
-    </header>
+<header class="header">
+    <div style="font-weight:900;" onclick="toggleAdmin()">ESPORTES VIP</div>
+    <div class="balance-btn" onclick="saldo += 50; atualizar()">
+        R$ <span id="spanSaldo">87.79</span>
+    </div>
+</header>
 
-    <div class="game-screen">
-        <div id="game-aviator" class="card">
-            <div class="canvas-area"><div id="multiplier">1.00x</div></div>
-            <button id="btnPlay" class="btn-main">APOSTAR NO AVIATOR</button>
+<div class="game-container">
+    <div id="game-aviator" class="game-card active">
+        <div class="display-main"><div id="multiplier">1.00x</div></div>
+        <button id="btnAviator" class="btn-play">APOSTAR NO AVIATOR</button>
+    </div>
+
+    <div id="game-tiger" class="game-card">
+        <div class="display-main" style="font-size: 3rem;">
+            <span id="t1">🐯</span><span id="t2">🐯</span><span id="t3">🐯</span>
         </div>
+        <button id="btnTiger" class="btn-play" style="background:var(--gold)">GIRAR TIGRINHO</button>
     </div>
 
-    <div class="tab-bar">
-        <div class="tab-item" onclick="mudarJogo('tiger')">🐯</div>
-        <div class="tab-item active" onclick="mudarJogo('aviator')">🚀</div>
-        <div class="tab-item" onclick="mudarJogo('mines')">💣</div>
+    <div class="history-box">
+        <div style="color:var(--accent); margin-bottom: 5px; font-weight: bold;">📊 APOSTAS AO VIVO</div>
+        <div id="historyContent"></div>
     </div>
 </div>
+
+<nav class="nav-tabs">
+    <span class="tab" onclick="switchG('tiger', this)">🐯</span>
+    <span class="tab active" onclick="switchG('aviator', this)">🚀</span>
+    <span class="tab" onclick="alert('Mines em breve!')">💣</span>
+</nav>
 
 <script>
-    let saldo = 87.79; // Conforme o vídeo
+    let saldo = 87.79;
     let rodando = false;
+    let modoDono = 'normal'; // normal, ganhar, perder
 
-    // SISTEMA DE NOTIFICAÇÕES REAIS
-    const nomes = ["Marcos_77", "Ana_Luck", "Vini01", "Cadu_Bet", "Bia_Santos", "Guga_011"];
-    const jogos = ["Tigrinho", "Aviator", "Mines"];
-
-    function fakeWinner() {
-        const area = document.getElementById('notification-area');
-        const n = nomes[Math.floor(Math.random()*nomes.length)];
-        const j = jogos[Math.floor(Math.random()*jogos.length)];
-        const v = (Math.random() * 500 + 20).toFixed(2);
-        
-        const div = document.createElement('div');
-        div.className = 'notif';
-        div.innerHTML = `<span><b>${n}</b> ganhou R$ ${v} no ${j}</span> <span style="font-size:1rem;">💰</span>`;
-        area.appendChild(div);
-        setTimeout(() => div.remove(), 4000);
-    }
-    setInterval(fakeWinner, 5000); // Notificação a cada 5 segundos
-
-    function entrar() {
-        const u = document.getElementById('user').value;
-        if(u === "admin123") { saldo = 9999; alert("MODO ADMIN ATIVO"); }
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('valSaldo').innerText = `R$ ${saldo.toFixed(2)}`;
+    function atualizar() { document.getElementById('spanSaldo').innerText = saldo.toFixed(2); }
+    function toggleAdmin() { let p = document.getElementById('adminPanel'); p.style.display = p.style.display == 'block' ? 'none' : 'block'; }
+    function switchG(game, el) {
+        document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('game-'+game).classList.add('active');
+        el.classList.add('active');
     }
 
-    // LÓGICA DO JOGO (AVIATOR DO VÍDEO)
-    document.getElementById('btnPlay').onclick = function() {
-        if(rodando) return;
-        rodando = true;
-        let mult = 1.00;
-        this.innerText = "CASH OUT";
-        this.style.background = "#e67e22";
-        
-        let crash = (Math.random() * 3 + 1.1).toFixed(2);
+    // SONS
+    function playSnd(id) { document.getElementById(id).play().catch(() => {}); }
+
+    // HISTÓRICO FAKE
+    const nomes = ["Marcos", "Ana_VIP", "Vini_Bet", "Bia", "Guga", "Zé.Pix"];
+    setInterval(() => {
+        const h = document.getElementById('historyContent');
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        const val = (Math.random() * 200).toFixed(2);
+        item.innerHTML = `<span>${nomes[Math.floor(Math.random()*6)]}</span> <span style="color:var(--primary)">+R$ ${val}</span>`;
+        h.prepend(item);
+        if(h.children.length > 5) h.removeChild(h.lastChild);
+    }, 4000);
+
+    // LÓGICA AVIATOR COM MODO DONO
+    document.getElementById('btnAviator').onclick = function() {
+        if(rodando) { rodando = false; return; }
+        if(saldo < 2) return alert("Sem saldo!");
+        saldo -= 2; atualizar(); rodando = true;
+        let m = 1.00; 
+        let crash;
+        if(modoDono == 'ganhar') crash = 10.50;
+        else if(modoDono == 'perder') crash = 1.05;
+        else crash = (Math.random() * 4 + 1.1).toFixed(2);
+
+        this.innerText = "CASH OUT"; this.style.background = "#e67e22";
         let loop = setInterval(() => {
-            mult += 0.02;
-            document.getElementById('multiplier').innerText = mult.toFixed(2) + "x";
-            
-            if(mult >= crash) {
-                clearInterval(loop);
-                rodando = false;
-                document.getElementById('multiplier').style.color = "red";
-                this.innerText = "APOSTAR NOVAMENTE";
-                this.style.background = "#2ecc71";
-                setTimeout(() => { document.getElementById('multiplier').style.color = "white"; }, 1000);
+            if(!rodando) { 
+                clearInterval(loop); saldo += (2 * m); 
+                playSnd('sndWin'); resetA(); return;
+            }
+            m += 0.05; document.getElementById('multiplier').innerText = m.toFixed(2) + "x";
+            if(m >= crash) { 
+                clearInterval(loop); rodando = false; 
+                playSnd('sndLose'); document.getElementById('multiplier').style.color='red';
+                setTimeout(()=>document.getElementById('multiplier').style.color='white', 1000);
+                resetA(); 
             }
         }, 100);
+    };
+    function resetA() { document.getElementById('btnAviator').innerText = "APOSTAR NO AVIATOR"; document.getElementById('btnAviator').style.background = "#2ecc71"; atualizar(); }
+
+    // TIGRINHO
+    document.getElementById('btnTiger').onclick = function() {
+        if(saldo < 5) return alert("Sem saldo");
+        saldo -= 5; atualizar();
+        const itens = ["🐯", "💰", "🧧", "🏮"];
+        let t = setInterval(() => {
+            document.getElementById('t1').innerText = itens[Math.floor(Math.random()*4)];
+            document.getElementById('t2').innerText = itens[Math.floor(Math.random()*4)];
+            document.getElementById('t3').innerText = itens[Math.floor(Math.random()*4)];
+        }, 100);
+        setTimeout(() => {
+            clearInterval(t);
+            if(modoDono == 'ganhar' || (document.getElementById('t1').innerText == document.getElementById('t2').innerText)) {
+                document.getElementById('t1').innerText = "🐯"; document.getElementById('t2').innerText = "🐯"; document.getElementById('t3').innerText = "🐯";
+                saldo += 50; playSnd('sndWin'); alert("GANHOU R$ 50!");
+            } else { playSnd('sndLose'); }
+            atualizar();
+        }, 1000);
     };
 </script>
 </body>
