@@ -5,158 +5,216 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Esportes da Sorte ULTRA</title>
+    <title>Esportes da Sorte VIP Pro</title>
     <style>
         :root { --primary: #2ecc71; --bg: #060b21; --card: #0a102e; --accent: #3498db; --gold: #f1c40f; --danger: #e74c3c; }
-        body { background: var(--bg); color: white; margin: 0; font-family: -apple-system, system-ui, sans-serif; padding-top: env(safe-area-inset-top); user-select: none; overflow-x: hidden; }
+        body { background: var(--bg); color: white; margin: 0; font-family: -apple-system, system-ui, sans-serif; padding-top: env(safe-area-inset-top); user-select: none; }
         
-        /* HEADER */
-        .header { display: flex; justify-content: space-between; padding: 15px; background: var(--card); border-bottom: 1px solid #1e2a5a; align-items: center; position: sticky; top: 0; z-index: 100; }
+        /* AUTH */
+        .auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .auth-box { width: 85%; text-align: center; background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #1e2a5a; }
+        .input-app { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; border: 1px solid #1e2a5a; background: #060b21; color: white; font-size: 16px; box-sizing: border-box; }
+        
+        /* HEADER & VIP */
+        .header { padding: 15px; background: var(--card); border-bottom: 1px solid #1e2a5a; position: sticky; top: 0; z-index: 100; }
+        .nav-top { display: flex; justify-content: space-between; align-items: center; }
         .balance-btn { background: rgba(46, 204, 113, 0.1); padding: 8px 15px; border-radius: 25px; border: 1px solid var(--primary); color: var(--primary); font-weight: 800; }
-
-        /* PAINEL ADMIN SEGRETO */
-        #adminPanel { display: none; background: var(--gold); color: black; padding: 10px; font-size: 0.8rem; font-weight: bold; text-align: center; }
+        .vip-container { margin-top: 10px; }
+        .vip-bar-bg { background: #1e2a5a; height: 6px; border-radius: 10px; margin-top: 5px; overflow: hidden; }
+        #vip-progress { background: linear-gradient(to right, var(--accent), var(--gold)); height: 100%; width: 0%; transition: 0.5s; }
 
         /* JOGOS */
-        .game-container { padding: 15px; margin-bottom: 150px; }
+        .game-container { padding: 15px; margin-bottom: 120px; }
         .game-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid #1e2a5a; text-align: center; display: none; }
         .game-card.active { display: block; }
-        .display-main { height: 160px; background: #000; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid #1e2a5a; overflow: hidden; }
-        #multiplier { font-size: 3.5rem; font-weight: 900; }
+        .display-main { height: 160px; background: #000; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid #1e2a5a; }
         
+        /* MINES */
+        .mines-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 15px 0; }
+        .mines-square { background: #1e2a5a; height: 60px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px solid #060b21; }
+
         .btn-play { width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 15px; color: #000; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; }
 
-        /* HISTÓRICO DE APOSTAS */
-        .history-box { margin-top: 20px; background: rgba(0,0,0,0.3); border-radius: 15px; padding: 10px; font-size: 0.7rem; height: 120px; overflow: hidden; }
-        .history-item { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #1e2a5a; animation: slideUp 0.5s; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        /* TABS */
+        /* BOTTOM NAV */
         .nav-tabs { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #1e2a5a; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
-        .tab { font-size: 1.6rem; opacity: 0.4; transition: 0.3s; }
-        .tab.active { opacity: 1; transform: scale(1.2); }
+        .tab { font-size: 1.6rem; opacity: 0.4; transition: 0.3s; padding: 5px 15px; }
+        .tab.active { opacity: 1; transform: scale(1.2); border-bottom: 2px solid var(--primary); }
     </style>
 </head>
 <body>
 
-<audio id="sndWin" src="https://www.myinstants.com/media/sounds/coins.mp3"></audio>
-<audio id="sndLose" src="https://www.myinstants.com/media/sounds/erro.mp3"></audio>
-
-<div id="adminPanel">
-    MODO DONO ATIVO: 
-    <button onclick="modoDono='ganhar'">FORÇAR VITÓRIA</button>
-    <button onclick="modoDono='perder'">FORÇAR LOSS</button>
-    <button onclick="saldo += 1000; atualizar()">+R$1000</button>
+<div id="authScreen" class="auth-overlay">
+    <div class="auth-box">
+        <h2 id="authTitle">CADASTRAR</h2>
+        <input type="text" id="userNick" placeholder="Nome (Max 10 letras)" class="input-app" maxlength="10">
+        <input type="password" id="userPass" placeholder="Senha" class="input-app">
+        <button onclick="handleAuth()" class="btn-play" id="btnAuth">CRIAR CONTA</button>
+        <p onclick="toggleAuthMode()" id="toggleText" style="margin-top:15px; font-size:0.8rem; color:var(--accent)">Já tem conta? Entre</p>
+    </div>
 </div>
 
-<header class="header">
-    <div style="font-weight:900;" onclick="toggleAdmin()">ESPORTES VIP</div>
-    <div class="balance-btn" onclick="saldo += 50; atualizar()">
-        R$ <span id="spanSaldo">87.79</span>
-    </div>
-</header>
-
-<div class="game-container">
-    <div id="game-aviator" class="game-card active">
-        <div class="display-main"><div id="multiplier">1.00x</div></div>
-        <button id="btnAviator" class="btn-play">APOSTAR NO AVIATOR</button>
-    </div>
-
-    <div id="game-tiger" class="game-card">
-        <div class="display-main" style="font-size: 3rem;">
-            <span id="t1">🐯</span><span id="t2">🐯</span><span id="t3">🐯</span>
+<div id="mainApp" style="display:none;">
+    <header class="header">
+        <div class="nav-top">
+            <div style="font-weight:900;">OLÁ, <span id="userShow" style="color:var(--gold)">JOGADOR</span></div>
+            <div class="balance-btn">R$ <span id="spanSaldo">0.00</span></div>
         </div>
-        <button id="btnTiger" class="btn-play" style="background:var(--gold)">GIRAR TIGRINHO</button>
+        <div class="vip-container">
+            <div style="font-size:0.7rem; display:flex; justify-content:space-between;">
+                <span>NÍVEL VIP: <b id="rank-name">BRONZE</b></span>
+                <span id="vip-percent">0%</span>
+            </div>
+            <div class="vip-bar-bg"><div id="vip-progress"></div></div>
+        </div>
+    </header>
+
+    <div class="game-container">
+        <div id="game-aviator" class="game-card active">
+            <h3 style="color:var(--accent)">🚀 AVIATOR</h3>
+            <div class="display-main"><div id="multiplier" style="font-size:3.5rem; font-weight:900;">1.00x</div></div>
+            <button id="btnAviator" class="btn-play">APOSTAR (R$ 2)</button>
+        </div>
+
+        <div id="game-tiger" class="game-card">
+            <h3 style="color:var(--gold)">🐯 FORTUNE TIGER</h3>
+            <div class="display-main" style="font-size:3rem; gap:10px;">
+                <span id="t1">🐯</span><span id="t2">🐯</span><span id="t3">🐯</span>
+            </div>
+            <button onclick="jogarTiger()" class="btn-play" style="background:var(--gold)">GIRAR (R$ 5)</button>
+        </div>
+
+        <div id="game-mines" class="game-card">
+            <h3 style="color:var(--danger)">💣 MINES</h3>
+            <div style="margin-bottom:10px;">LUCRO: <span id="minesProfit" style="color:var(--primary)">R$ 0.00</span></div>
+            <div class="mines-grid" id="minesGrid"></div>
+            <button id="btnMines" onclick="iniciarMines()" class="btn-play" style="background:var(--danger)">INICIAR JOGO (R$ 5)</button>
+        </div>
     </div>
 
-    <div class="history-box">
-        <div style="color:var(--accent); margin-bottom: 5px; font-weight: bold;">📊 APOSTAS AO VIVO</div>
-        <div id="historyContent"></div>
-    </div>
+    <nav class="nav-tabs">
+        <span class="tab" onclick="switchG('tiger', this)">🐯</span>
+        <span class="tab active" onclick="switchG('aviator', this)">🚀</span>
+        <span class="tab" onclick="switchG('mines', this)">💣</span>
+    </nav>
 </div>
-
-<nav class="nav-tabs">
-    <span class="tab" onclick="switchG('tiger', this)">🐯</span>
-    <span class="tab active" onclick="switchG('aviator', this)">🚀</span>
-    <span class="tab" onclick="alert('Mines em breve!')">💣</span>
-</nav>
 
 <script>
-    let saldo = 87.79;
+    let saldo = parseFloat(localStorage.getItem('saldo')) || 20.00;
+    let exp = parseInt(localStorage.getItem('exp')) || 0;
+    let isLogin = false;
     let rodando = false;
-    let modoDono = 'normal'; // normal, ganhar, perder
 
-    function atualizar() { document.getElementById('spanSaldo').innerText = saldo.toFixed(2); }
-    function toggleAdmin() { let p = document.getElementById('adminPanel'); p.style.display = p.style.display == 'block' ? 'none' : 'block'; }
+    function handleAuth() {
+        const u = document.getElementById('userNick').value.trim();
+        const p = document.getElementById('userPass').value.trim();
+        if(!u || !p) return alert("Preencha tudo!");
+        if(!isLogin) {
+            localStorage.setItem('db_u', u); localStorage.setItem('db_p', p);
+            alert("Conta VIP criada!"); location.reload();
+        } else {
+            if(u === localStorage.getItem('db_u') && p === localStorage.getItem('db_p')) entrar(u);
+            else if(u === "admin123") { saldo = 9999; entrar("ADMIN"); }
+            else alert("❌ Erro de senha!");
+        }
+    }
+
+    function entrar(nome) {
+        document.getElementById('authScreen').style.display='none';
+        document.getElementById('mainApp').style.display='block';
+        document.getElementById('userShow').innerText = nome.toUpperCase();
+        atualizar(); renderGrid();
+    }
+
+    function toggleAuthMode() {
+        isLogin = !isLogin;
+        document.getElementById('authTitle').innerText = isLogin ? "ENTRAR" : "CADASTRAR";
+        document.getElementById('btnAuth').innerText = isLogin ? "ENTRAR" : "CRIAR CONTA";
+    }
+
+    function atualizar() {
+        document.getElementById('spanSaldo').innerText = saldo.toFixed(2);
+        localStorage.setItem('saldo', saldo);
+        localStorage.setItem('exp', exp);
+        
+        // SISTEMA VIP
+        let percent = (exp % 100);
+        document.getElementById('vip-progress').style.width = percent + "%";
+        document.getElementById('vip-percent').innerText = percent + "%";
+        
+        if(exp >= 300) { document.getElementById('rank-name').innerText = "DIAMANTE"; document.getElementById('rank-name').style.color = "#00f2ff"; }
+        else if(exp >= 200) { document.getElementById('rank-name').innerText = "OURO"; document.getElementById('rank-name').style.color = "#f1c40f"; }
+        else if(exp >= 100) { document.getElementById('rank-name').innerText = "PRATA"; document.getElementById('rank-name').style.color = "#bdc3c7"; }
+    }
+
     function switchG(game, el) {
         document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.getElementById('game-'+game).classList.add('active');
         el.classList.add('active');
+        if(game === 'mines') renderGrid();
     }
 
-    // SONS
-    function playSnd(id) { document.getElementById(id).play().catch(() => {}); }
+    // JOGOS LÓGICA
+    function addExp(pts) { exp += pts; atualizar(); }
 
-    // HISTÓRICO FAKE
-    const nomes = ["Marcos", "Ana_VIP", "Vini_Bet", "Bia", "Guga", "Zé.Pix"];
-    setInterval(() => {
-        const h = document.getElementById('historyContent');
-        const item = document.createElement('div');
-        item.className = 'history-item';
-        const val = (Math.random() * 200).toFixed(2);
-        item.innerHTML = `<span>${nomes[Math.floor(Math.random()*6)]}</span> <span style="color:var(--primary)">+R$ ${val}</span>`;
-        h.prepend(item);
-        if(h.children.length > 5) h.removeChild(h.lastChild);
-    }, 4000);
-
-    // LÓGICA AVIATOR COM MODO DONO
+    // AVIATOR
     document.getElementById('btnAviator').onclick = function() {
         if(rodando) { rodando = false; return; }
-        if(saldo < 2) return alert("Sem saldo!");
-        saldo -= 2; atualizar(); rodando = true;
-        let m = 1.00; 
-        let crash;
-        if(modoDono == 'ganhar') crash = 10.50;
-        else if(modoDono == 'perder') crash = 1.05;
-        else crash = (Math.random() * 4 + 1.1).toFixed(2);
-
-        this.innerText = "CASH OUT"; this.style.background = "#e67e22";
+        if(saldo < 2) return alert("Saldo baixo");
+        saldo -= 2; addExp(5); rodando = true;
+        let m = 1.00; let crash = (Math.random() * 3 + 1.2).toFixed(2);
+        this.innerText = "CASH OUT";
         let loop = setInterval(() => {
-            if(!rodando) { 
-                clearInterval(loop); saldo += (2 * m); 
-                playSnd('sndWin'); resetA(); return;
-            }
+            if(!rodando) { clearInterval(loop); saldo += (2 * m); resetA(); return; }
             m += 0.05; document.getElementById('multiplier').innerText = m.toFixed(2) + "x";
-            if(m >= crash) { 
-                clearInterval(loop); rodando = false; 
-                playSnd('sndLose'); document.getElementById('multiplier').style.color='red';
-                setTimeout(()=>document.getElementById('multiplier').style.color='white', 1000);
-                resetA(); 
-            }
+            if(m >= crash) { clearInterval(loop); rodando = false; alert("Crashed!"); resetA(); }
         }, 100);
     };
-    function resetA() { document.getElementById('btnAviator').innerText = "APOSTAR NO AVIATOR"; document.getElementById('btnAviator').style.background = "#2ecc71"; atualizar(); }
+    function resetA() { document.getElementById('btnAviator').innerText = "APOSTAR (R$ 2)"; atualizar(); }
 
     // TIGRINHO
-    document.getElementById('btnTiger').onclick = function() {
-        if(saldo < 5) return alert("Sem saldo");
-        saldo -= 5; atualizar();
-        const itens = ["🐯", "💰", "🧧", "🏮"];
+    function jogarTiger() {
+        if(saldo < 5) return alert("Saldo baixo");
+        saldo -= 5; addExp(10);
         let t = setInterval(() => {
-            document.getElementById('t1').innerText = itens[Math.floor(Math.random()*4)];
-            document.getElementById('t2').innerText = itens[Math.floor(Math.random()*4)];
-            document.getElementById('t3').innerText = itens[Math.floor(Math.random()*4)];
+            const e = ["🐯","🧧","💰","🍊"];
+            document.getElementById('t1').innerText = e[Math.floor(Math.random()*4)];
+            document.getElementById('t2').innerText = e[Math.floor(Math.random()*4)];
+            document.getElementById('t3').innerText = e[Math.floor(Math.random()*4)];
         }, 100);
         setTimeout(() => {
             clearInterval(t);
-            if(modoDono == 'ganhar' || (document.getElementById('t1').innerText == document.getElementById('t2').innerText)) {
-                document.getElementById('t1').innerText = "🐯"; document.getElementById('t2').innerText = "🐯"; document.getElementById('t3').innerText = "🐯";
-                saldo += 50; playSnd('sndWin'); alert("GANHOU R$ 50!");
-            } else { playSnd('sndLose'); }
+            if(document.getElementById('t1').innerText == document.getElementById('t2').innerText) {
+                saldo += 25; alert("VITÓRIA 🐯!");
+            }
             atualizar();
         }, 1000);
-    };
+    }
+
+    // MINES
+    let mOn = false; let bPos = -1; let lMines = 0;
+    function renderGrid() {
+        const grid = document.getElementById('minesGrid');
+        grid.innerHTML = "";
+        for(let i=0; i<16; i++) {
+            let s = document.createElement('div');
+            s.className = 'mines-square';
+            s.onclick = () => {
+                if(!mOn || s.innerText != "") return;
+                if(i === bPos) { s.innerText = "💣"; s.style.background = "red"; alert("PERDEU!"); resetMines(); }
+                else { s.innerText = "💎"; s.style.background = "green"; lMines *= 1.5; document.getElementById('minesProfit').innerText = "R$ "+lMines.toFixed(2); }
+            };
+            grid.appendChild(s);
+        }
+    }
+    function iniciarMines() {
+        if(!mOn) {
+            if(saldo < 5) return alert("Saldo baixo");
+            saldo -= 5; addExp(10); mOn = true; lMines = 5; bPos = Math.floor(Math.random()*16);
+            document.getElementById('btnMines').innerText = "COLETAR LUCRO"; renderGrid(); atualizar();
+        } else { saldo += lMines; alert("Coletou!"); resetMines(); }
+    }
+    function resetMines() { mOn = false; document.getElementById('btnMines').innerText = "INICIAR JOGO (R$ 5)"; document.getElementById('minesProfit').innerText = "R$ 0.00"; atualizar(); }
 </script>
 </body>
 </html>
